@@ -1,0 +1,225 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{default}
+\usetheme{Antibes}
+\title{Kinect y Python, ¿por qué no?}
+\author{David Pellicer \\ \texttt{davidpellicermartin@gmail.com}}
+\date{Octubre 2013}
+\begin{document}
+\begin{frame}
+\includegraphics[height=0.2\textheight]{logo_pug.jpg} \hspace*{7.3cm}
+\includegraphics[height=0.2\textheight]{logo_codium.png}
+ \titlepage
+ \begin{center}
+   \vspace*{-1cm} \includegraphics[height=0.2\textheight]{kinect_sensor.png}
+ \end{center}
+\end{frame}
+\section{Introducción}
+\subsection{¿Qué es Kinect?}
+\begin{frame}
+\frametitle{¿Qué es Kinect? (Oficialmente)}
+
+\begin{block}{Oficialmente}
+  \begin{itemize}
+    \item Es un dispositivo de juego desarrollado por Microsoft para su videoconsola XBox 360
+    \item Permite jugar usando todo el cuerpo y sin usar un mando convencional
+  \end{itemize}
+  \end{block}
+   \begin{center}
+   \includegraphics[height=0.3\textheight]{kinect_play.jpg}
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{¿Qué es Kinect? (Realmente)}
+\begin{exampleblock}{Un dispositivo que contiene:}
+ \begin{itemize}
+  \item <1->Una cámara RGB
+  \item <2->Un sensor de profundidad
+  \item <3->Múltiples micrófonos
+  \item <4->Varios motores
+  \item <5->Un puerto USB
+  \item <6->Un procesador capaz de utilizar todo y ofrecer funciones de alto nivel
+ \end{itemize}
+ \end{exampleblock}
+\end{frame}
+
+\subsection{¿Cómo podemos usarlo en un PC?}
+\begin{frame}
+\frametitle{¿Cómo podemos usarlo en un PC?}
+\pause
+\begin{alertblock}{La opción privativa (Micro\$oft)}
+ \begin{itemize}
+  \item SDK oficial de Micro\$oft
+  \item En Window\$ (a partir de Vista)
+  \item Usando un plugin para Visual Studio
+  \item Acceso a documentación oficial y APIs de alto nivel (reconocimiento de esqueleto, etc)
+ \end{itemize}
+\end{alertblock}
+\end{frame}
+\begin{frame}
+\frametitle{¿Cómo podemos usarlo en un PC?}
+  \begin{exampleblock}{La opción libre (Freenect)}
+   \begin{itemize}
+    \item Driver libre 
+    \item En cualquier sistema operativo
+    \item Con bindings para múltiples lenguajes (C++, Ruby, Python, ActionScript...)
+    \item Acceso a documentación de la comunidad, y a funciones básicas del sensor
+   \end{itemize}
+  \end{exampleblock}
+  \end{frame}
+
+\subsection{Problemáticas}
+
+\begin{frame}
+\frametitle{Problemas}
+\begin{itemize}
+ \item Las licencias. OpenNI ya tuvo problemas.
+ \item El hardware. Recientemente da problemas con USBs 3.0
+ \item Las APIs. Al estar el driver hecho por I.Inversa, faltan funcionalidades.
+\end{itemize}
+\end{frame}
+
+\section{Freenect}
+\subsection{Historia}
+
+\begin{frame}
+\frametitle{La carrera por hackear Kinect}
+\begin{itemize}
+ \item <1->Todo empieza cuando una empresa lanza una carrera para ver quien hackea antes Kinect
+ \item <2->Micro\$oft dice que Kinect es suficientemente seguro como para que nadie pueda hacerlo
+ \item <3->Al tercer día ya se publica un video de una persona que ha conseguido información de la camara y el sensor
+ \end{itemize}
+ \begin{center}
+\includegraphics[height=0.3\textheight]{facepalm1.jpg}<3->
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{La victoria de la carrera}
+ \begin{itemize}
+  \item Para no publicar su código, el ``ganador'' no reclama el premio.
+  \item Al día siguiente la empresa publica unos datos en bruto sacados del USB
+  \item En apenas unas horas, Hector Martín escribe un controlador y una aplicación para ver las imagenes
+  \pause
+  \item A partir de ahí se crea la librería libfreenect, que es mantenida por la comunidad OpenKinect
+ \end{itemize}
+  \begin{center}
+\includegraphics[height=0.1\textheight]{open_kinect.png}
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{La ``traición'' de PrimeSense a Micro\$oft}
+ \begin{itemize}
+  \item La empresa con la patente del sensor de profundidad de Kinect libera su propio controlador (OpenNI)
+  \item Además permite usar este controlador con su framework NITE
+  \item Este framework da acceso a funciones de alto nivel, como reconocimiento de gestos y de esqueletos
+  \item En 2013, y por problemas de licencias con Microsoft, OpenNI deja de soportar Kinect, y por tanto también NITE
+ \end{itemize}
+
+\end{frame}
+
+
+
+\subsection{Instalación}
+
+\begin{frame}
+\frametitle{Instalación en Linux}
+ \begin{block}{Desde repositorios}<1->
+  \begin{itemize}
+   \item Los repositorios de Ubuntu están desactualizados. Se puede instalar pero no funcionan algunos bindings
+   \item Hay unos repositorios que si que mantienen el código actualizado. Es mejor agregarlos e instalar desde ahí
+   \item \texttt{sudo make install libfreenect python-freenect}
+  \end{itemize}
+ \end{block}
+ \begin{block}{Desde github}<2->
+  \begin{itemize}
+   \item En GitHub está el código del proyecto, así como el de los bindings
+   \item git clone y make install
+  \end{itemize}
+ \end{block}
+\end{frame}
+
+\subsection{Funciones más importantes}
+\begin{frame}
+\frametitle{Funciones de alto nivel}
+\begin{itemize}
+ \item \texttt{setLEDStatus(LEDStatus)}
+ \item \texttt{getLEDStatus()}
+ \item \texttt{setMotorPosition(float)}
+ \item \texttt{getMotorPosition()}
+ \item \texttt{getRGBImage()}
+ \item \texttt{getDepthImage()}
+\end{itemize}
+\end{frame}
+
+\subsection{El binding de python}
+\begin{frame}
+\frametitle{El binding de python}
+\begin{itemize}
+ \item \texttt{import freenect}
+ \item \texttt{img = sync\_get\_video()} Nos da una matriz RGB de 640x480
+ \item \texttt{depth = sync\_get\_depth()} Nos da una matriz de 640x480 con las profundidades
+\end{itemize}
+\pause
+\large\textbf{¡Y con esto a trabajar!}
+\end{frame}
+
+\subsection{Otras librerías útiles}
+\begin{frame}
+ \frametitle{Otras librerías}
+ \begin{itemize}
+  \item \texttt{numpy} Para trabajar con matrices y funciones matemáticas eficientes
+  \item \texttt{opencv} Para hacer analisis de imagen y mostrar video por pantalla
+  \item \texttt{xlib} Para usar elementos del escritorio como el desktop o el ratón
+ \end{itemize}
+\end{frame}
+
+\section{Ejemplos prácticos}
+\subsection{Primeros pasos}
+\begin{frame}
+\frametitle{Primeros pasos}
+\end{frame}
+
+\subsection{Ejemplo por pasos: Manejar el ratón con la mano}
+\begin{frame}
+ \frametitle{Ejemplo por pasos: Manejar el ratón con la mano}
+\end{frame}
+
+\subsection{Manejo gestual del escritorio, otra implementación}
+\begin{frame}
+ \frametitle{Manejo gestual del escritorio, otra implementación}
+\end{frame}
+
+\section{Conclusión}
+\begin{frame}
+\frametitle{Conclusión}
+ \begin{itemize}
+  \item Con muy pocas lineas podemos hacer cosas interesantes
+  \item Programar en formato script con Python es más rápido que usar el códgio C
+  \pause
+  \item El límite a los interfaces y usos que podemos desarrollar es nuestra imaginación
+ \end{itemize}
+\end{frame}
+\begin{frame}
+ \frametitle{¿Preguntas?}
+ \begin{center}
+ \includegraphics[height=0.5\textwidth]{question_mark.jpg}
+\end{center}
+ \end{frame}
+ \begin{frame}
+  \begin{center}
+   \Huge\textbf{¡¡Gracias por su atención!!}
+  \end{center}
+
+ \end{frame}
+
+
+
+
+
+
+\end{document}
